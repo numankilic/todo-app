@@ -20,14 +20,40 @@ function App() {
 
 
   }, [todoItems])
+
+  function addNewTodoItem() {
+    fetch('http://localhost:8080/api/todoItems', {
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST'
+    })
+      .then((response => response.json()))
+      .then(aTodoItem => {
+        console.log(aTodoItem)
+        setTodoItems([...todoItems, aTodoItem])
+      })
+  }
+
+  function handleDeleteTodoItem(item) {
+    const updatedTodoItems = todoItems.filter(aTodoItem => aTodoItem.id !== item.id)
+    setTodoItems([...updatedTodoItems])
+    
+  }
   return (
     <div>
-      {todoItems
-        ? todoItems.map((todoItem) => {
-          return <TodoItem key={todoItem.id} data={todoItem} />
-        })
-        : "loading data..."}
+      <div>
+        <button onClick={addNewTodoItem}>Add new item</button>
+      </div>
+      <div>
+        {todoItems
+          ? todoItems.map((todoItem) => {
+            return <TodoItem key={todoItem.id} data={todoItem} emitDeleteTodoItem={handleDeleteTodoItem} />
+          })
+          : "loading data..."}
+      </div>
     </div>
+
   );
 }
 
