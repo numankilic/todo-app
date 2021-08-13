@@ -25,7 +25,7 @@ const TodoItem = (props) => {
 
     function updateIsDone() {
         setDirty(true)
-        setTodoItem({ ...todoItem, done: !todoItem.isDone })
+        setTodoItem({ ...todoItem, done: !todoItem.done })
     }
 
     function updateTask(e) {
@@ -49,7 +49,7 @@ const TodoItem = (props) => {
         <div>
             <input
                 type="checkbox"
-                checked={todoItem.isDone}
+                checked={todoItem.done}
                 onChange={updateIsDone}
             />
             {todoItem.done ? (
